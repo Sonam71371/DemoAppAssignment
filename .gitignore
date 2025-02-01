@@ -1,0 +1,34 @@
+
+# macOS system files
+.DS_Store
+
+# Xcode specific files
+build/
+DerivedData/
+*.xcworkspace
+xcuserdata/
+*.xcuserstate
+
+# Swift Package Manager
+Packages/
+.swiftpm/
+.build/
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+
+# Environment files
+.env
+secrets.json
+
+# Ignore personal user settings
+*.xcuserdatad/

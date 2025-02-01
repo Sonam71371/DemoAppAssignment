@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5472B1292D4D24A2001EB511 /* CombineSchedulers in Frameworks */ = {isa = PBXBuildFile; productRef = 5472B1282D4D24A2001EB511 /* CombineSchedulers */; };
+		5472B1422D4D2520001EB511 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5472B1412D4D2520001EB511 /* ComposableArchitecture */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		546900D42D4B89EC0088671E /* DemoAppAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoAppAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5472B1292D4D24A2001EB511 /* CombineSchedulers in Frameworks */,
+				5472B1422D4D2520001EB511 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,8 +71,6 @@
 				546900D62D4B89EC0088671E /* DemoAppAssignment */,
 			);
 			name = DemoAppAssignment;
-			packageProductDependencies = (
-			);
 			productName = DemoAppAssignment;
 			productReference = 546900D42D4B89EC0088671E /* DemoAppAssignment.app */;
 			productType = "com.apple.product-type.application";
@@ -94,6 +99,10 @@
 			);
 			mainGroup = 546900CB2D4B89EC0088671E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5472B1272D4D24A2001EB511 /* XCRemoteSwiftPackageReference "combine-schedulers" */,
+				5472B1402D4D2520001EB511 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 546900D52D4B89EC0088671E /* Products */;
 			projectDirPath = "";
@@ -335,6 +344,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5472B1272D4D24A2001EB511 /* XCRemoteSwiftPackageReference "combine-schedulers" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/combine-schedulers";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
+		5472B1402D4D2520001EB511 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.17.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5472B1282D4D24A2001EB511 /* CombineSchedulers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5472B1272D4D24A2001EB511 /* XCRemoteSwiftPackageReference "combine-schedulers" */;
+			productName = CombineSchedulers;
+		};
+		5472B1412D4D2520001EB511 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5472B1402D4D2520001EB511 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 546900CC2D4B89EC0088671E /* Project object */;
 }
