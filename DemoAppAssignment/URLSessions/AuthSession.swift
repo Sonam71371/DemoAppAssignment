@@ -32,10 +32,6 @@ class AuthService {
             }
 
             guard let data = data else { return }
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("Received login JSON: \(jsonString)") // Debugging raw data
-            }
-
             do {
                 let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
                 

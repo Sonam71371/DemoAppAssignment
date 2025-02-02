@@ -31,13 +31,6 @@ struct ArtistView: View {
                                     Text(artist.name ?? "")
                                 }
                             }
-//                            HStack {
-//                                AsyncImage(url: URL(string: artist.images?.first?.url ?? ""))
-//                                    .frame(width: 50, height: 50)
-//                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-//                                
-//                                Text(artist.name ?? "")
-//                            }
                         }
                     }
                 }

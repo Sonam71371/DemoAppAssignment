@@ -13,14 +13,6 @@ struct LoginResponse: Codable {
     let access_token: String
 }
 
-////For Song
-//struct Song: Identifiable {
-//    let id: String
-//    let name: String
-//    let artist: String
-//    let previewUrl: String // URL for the song preview (short clip)
-//}
-
 
 //for Albums
 struct SportifyAlbums: Decodable {

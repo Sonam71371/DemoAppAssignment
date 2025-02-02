@@ -9,10 +9,9 @@ import SwiftUI
 import AVKit
 
 struct SongDetailView: View {
-    let song: Items//Song
-    
-    @State private var player: AVPlayer?
-    @State private var isPlaying: Bool = false
+    public let song: Items//Song
+    @State public var player: AVPlayer?
+    @State public var isPlaying: Bool = false
 
     var body: some View {
         VStack {
@@ -25,7 +24,7 @@ struct SongDetailView: View {
                 .foregroundColor(.gray)
                 .padding(.bottom)
             
-            if let url = URL(string: song.external_urls?.spotify ?? "") {
+            if URL(string: song.external_urls?.spotify ?? "") != nil {
                 AVPlayerControllerRepresented(player: player)
                     .frame(height: 200)
             }
@@ -44,12 +43,12 @@ struct SongDetailView: View {
         }
     }
     
-    private func setupPlayer() {
+    public func setupPlayer() {
         guard let url = URL(string: song.external_urls?.spotify ?? "") else { return }
         player = AVPlayer(url: url)
     }
     
-    private func togglePlayPause() {
+    public func togglePlayPause() {
         if isPlaying {
             player?.pause()
         } else {

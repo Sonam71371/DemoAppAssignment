@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "id" : "EC87FC0D-763E-4AB7-A342-8CB288E18898",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "enabled" : false,
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:DemoAppAssignment.xcodeproj",
+        "identifier" : "5472B2872D4FB2E200CEE12D",
+        "name" : "DemoAppAssignmentTests"
+      }
+    }
+  ],
+  "version" : 1
+}

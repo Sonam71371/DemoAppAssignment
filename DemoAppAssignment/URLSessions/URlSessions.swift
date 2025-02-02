@@ -9,7 +9,6 @@ import Foundation
 import ComposableArchitecture
 
 struct SpotifyClient {
-    //    var fetchPlaylists: @Sendable () async throws -> [Playlist]
     var fetchPlaylists: @Sendable () async throws -> [Items]
 }
 
