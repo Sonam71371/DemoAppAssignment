@@ -19,7 +19,16 @@ struct ArtistView: View {
                     if viewStore.isLoading {
                         ProgressView("Loading Artists...")
                     } else if let error = viewStore.errorMessage {
-                        Text("Error: \(error)").foregroundColor(.red)
+                        VStack{
+                            Text("Error: \(error)").foregroundColor(.red)
+                            
+                            Button(action: {
+                                AuthUser()//Refresh action
+                            }) {
+                                Image(systemName: "arrow.clockwise")
+                                }
+                            }
+                        
                     } else {
                         List(viewStore.artists) { artist in
                             NavigationLink(destination: SongDetailView(song: artist)) {
@@ -32,12 +41,57 @@ struct ArtistView: View {
                                 }
                             }
                         }
+                        .refreshable {
+                            viewStore.send(.fetchArtists)
+                        }
+                    }
+                    /* else {
+                     List(viewStore.artists) { artist in
+                         NavigationLink(destination: SongDetailView(song: artist)) {
+                             HStack {
+                                 AsyncImage(url: URL(string: artist.images?.first?.url ?? ""))
+                                     .frame(width: 50, height: 50)
+                                     .clipShape(RoundedRectangle(cornerRadius: 8))
+                                 
+                                 Text(artist.name ?? "")
+                             }
+                         }
+                     }
+                 }*/
+                }
+                .navigationBarTitleDisplayMode(.inline) // Ensures title stays in the center
+                .toolbar {
+                    // Centered Title
+                    ToolbarItem(placement: .principal) {
+                        Text("Spotify Artist List")
+                            .font(.headline)
+                    }
+                    
+                    // Refresh Button on the Right
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            AuthUser()//Refresh action // Refresh action
+                        }) {
+                            Image(systemName: "arrow.clockwise")
+                                .foregroundColor(.blue)
+                        }
                     }
                 }
-                .navigationTitle("Spotify Artist List")
                 .onAppear {
                     viewStore.send(.fetchArtists)
                 }
+            }
+        }
+    }
+    
+    private func AuthUser() {
+
+        AuthService.shared.login() { result in
+            switch result {
+            case .success:
+                store.send(.fetchArtists)
+            case .failure(let error):
+                print("Error logging in: \(error.localizedDescription)")
             }
         }
     }

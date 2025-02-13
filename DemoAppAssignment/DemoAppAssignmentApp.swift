@@ -5,7 +5,8 @@ import ComposableArchitecture
 struct DemoAppAssignmentApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            ContentView()
+            //LoginView()
         }
     }
 }
