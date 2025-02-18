@@ -33,8 +33,9 @@ class APIService: ObservableObject {
         guard let url = URL(string: urlString) else { return }
         
         var request = URLRequest(url: url)
-        let token = UserDefaults.standard.string(forKey: "authToken")!
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        if let token = UserDefaults.standard.string(forKey: "authToken"), token != "" {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         URLSession.shared.dataTask(with: request) { data, _, _ in
             if let data = data {

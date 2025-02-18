@@ -64,15 +64,16 @@ struct PlaylistView: View {
                 }
             }
             .onAppear {
+//                apiService.fetchPlaylists()
                 refreshData()
             }
         }
     }
 
-    // Function to refresh both APIs
+    // Function to refresh Bearer Token
     private func refreshData() {
         AuthService.shared.login { result in
-            DispatchQueue.main.async {  // Ensure UI update happens on the main thread
+            DispatchQueue.main.async {  // UI update happens on the main thread
                 switch result {
                 case .success:
                     apiService.fetchPlaylists()

@@ -65,15 +65,8 @@ struct SpotifyReducer: Reducer {
             switch action {
             case .fetchPlaylists:
                 state.isLoading = true
+                state.errorMessage = nil
                 return .run { send in
-//                    do {
-//                                let playlists = try await spotifyClient.fetchPlaylists()
-////                                print("📡 API Response: \(playlists)") // ✅ Debug API response
-//                                await send(.playlistsResponse(.success(playlists))) // ✅ Correct way to send success
-//                            } catch {
-////                                print("❌ API Error: \(error.localizedDescription)") // ✅ Debug API error
-//                                await send(.playlistsResponse(.failure(error))) // ✅ Correct way to send failure
-//                            }
                     await send(.playlistsResponse(Result {
                         try await spotifyClient.fetchPlaylists()
                     }))
@@ -82,12 +75,11 @@ struct SpotifyReducer: Reducer {
             case .playlistsResponse(.success(let playlists)):
                 state.playlists.removeAll()
                 state.playlists = playlists
-                print("✅ Received playlists: \(playlists)") // Debugging
-                print("✅ state.playlists : \(state.playlists )") // Debugging
                 state.isLoading = false
                 return .none
                 
             case .playlistsResponse(.failure(let error)):
+                state.errorMessage = nil 
                 state.errorMessage = error.localizedDescription
                 state.isLoading = false
                 return .none
@@ -121,6 +113,7 @@ struct SpotifyArtistReducer: Reducer {
             switch action {
             case .fetchArtists:
                 state.isLoading = true
+                state.errorMessage = nil
                 return .run { send in
                     await send(.artistsResponse(Result {
                         try await spotifyArtistClient.fetchArtists()
@@ -128,11 +121,13 @@ struct SpotifyArtistReducer: Reducer {
                 }
                 
             case .artistsResponse(.success(let playlists)):
+                state.artists.removeAll()
                 state.artists = playlists
                 state.isLoading = false
                 return .none
                 
             case .artistsResponse(.failure(let error)):
+                state.errorMessage = nil
                 state.errorMessage = error.localizedDescription
                 state.isLoading = false
                 return .none

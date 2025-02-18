@@ -48,17 +48,13 @@ struct SpotifyView: View {
                             
                             Button(action: {
                                 AuthUser(viewStore)//Refresh action
-//                                print("🔄 Refresh triggered")
-//                                viewStore.send(.fetchPlaylists)
                             }) {
                                 Image(systemName: "arrow.clockwise")
                                 }
                             }
                         
                     } else {
-//                        List(viewStore.filteredPlaylists, id: \.id ) { playlist in
-                        List(viewStore.playlists.indices, id: \.self) { index in
-                            let playlist = viewStore.playlists[index]
+                        List(viewStore.filteredPlaylists) { playlist in
                             NavigationLink(destination: SongDetailView(song: playlist)) {
                                 HStack {
                                     AsyncImage(url: URL(string: playlist.images?.first?.url ?? ""))
@@ -88,7 +84,6 @@ struct SpotifyView: View {
                         Button(action: {
                             AuthUser(viewStore)
                             print("🔄 Refresh triggered")
-//                            viewStore.send(.fetchPlaylists) // Refresh action
                         }) {
                             Image(systemName: "arrow.clockwise")
                                 .foregroundColor(.blue)
@@ -116,6 +111,9 @@ struct SpotifyView: View {
         }
     }
 }
+
+//List(viewStore.playlists.indices, id: \.self) { index in
+//                            let playlist = viewStore.playlists[index]
 
 //                        List(viewStore.filteredPlaylists) { playlist in
 //                            NavigationLink(destination: SongDetailView(song: playlist)) {

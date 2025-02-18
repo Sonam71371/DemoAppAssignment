@@ -58,9 +58,8 @@ struct ListView: View {
             ContentView()
                 .onAppear { clearUserDefaults() }
         } else {
-            BottomTabView()
-//                .onAppear { clearUserDefaults() }
-//            LoginView()
+            LoginView()
+                .onAppear { clearUserDefaults() }
         }
     }
     
