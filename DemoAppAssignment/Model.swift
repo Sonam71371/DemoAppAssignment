@@ -41,8 +41,8 @@ struct Items : Decodable,Identifiable, Equatable {
     let artists : [Artists]?
     
     static func == (lhs: Items, rhs: Items) -> Bool {
-           return lhs.id == rhs.id
-       }
+        return lhs.id == rhs.id
+    }
 }
 
 struct Images : Decodable {
@@ -55,8 +55,21 @@ struct External_urls : Decodable {
     let spotify : String?
 }
 
-    
 //For Artist
 struct ArtistResponse : Decodable {
     let artists : [Items]
+}
+
+
+// Item model
+struct Item: Identifiable {
+    let name: String
+    var id: Int
+}
+
+// Section model
+struct SectionData: Identifiable {
+    let title: String
+    let items: [Item]
+    var id: Int
 }

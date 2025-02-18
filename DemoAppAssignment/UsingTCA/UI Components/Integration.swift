@@ -26,7 +26,7 @@ struct ContentView: View {
                     Label("Playlists", systemImage: "music.note.list")
                 }
 
-            ArtistView(store: artistStore)
+            SpotifyArtistView(store: artistStore)
                 .tabItem {
                     Label("Artist", systemImage: "person.crop.circle")
                 }

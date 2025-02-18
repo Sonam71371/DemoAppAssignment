@@ -1,5 +1,40 @@
 import ComposableArchitecture
 
+//struct SpotifyGenericReducer<Item: Identifiable & Equatable>: Reducer {
+//    struct State: Equatable {
+//        var items: [Item] = []
+//        var isLoading = false
+//        var errorMessage: String?
+//    }
+//
+//    enum Action {
+//        case fetchItems
+//        case itemsLoaded(Result<[Item], Error>)
+//    }
+//
+//    func reduce(into state: inout State, action: Action) -> Effect<Action> {
+//        switch action {
+//        case .fetchItems:
+//            state.isLoading = true
+//            return .run { send in
+//                let result: Result<[Item], Error> = await fetchData() // Replace with API call
+//                await send(.itemsLoaded(result))
+//            }
+//            
+//        case .itemsLoaded(let result):
+//            state.isLoading = false
+//            switch result {
+//            case .success(let items):
+//                state.items = items
+//            case .failure(let error):
+//                state.errorMessage = error.localizedDescription
+//            }
+//            return .none
+//        }
+//    }
+//}
+
+
 struct SpotifyReducer: Reducer {
     struct State: Equatable {
         var playlists: [Items] = []
@@ -31,13 +66,24 @@ struct SpotifyReducer: Reducer {
             case .fetchPlaylists:
                 state.isLoading = true
                 return .run { send in
+//                    do {
+//                                let playlists = try await spotifyClient.fetchPlaylists()
+////                                print("📡 API Response: \(playlists)") // ✅ Debug API response
+//                                await send(.playlistsResponse(.success(playlists))) // ✅ Correct way to send success
+//                            } catch {
+////                                print("❌ API Error: \(error.localizedDescription)") // ✅ Debug API error
+//                                await send(.playlistsResponse(.failure(error))) // ✅ Correct way to send failure
+//                            }
                     await send(.playlistsResponse(Result {
                         try await spotifyClient.fetchPlaylists()
                     }))
                 }
                 
             case .playlistsResponse(.success(let playlists)):
+                state.playlists.removeAll()
                 state.playlists = playlists
+                print("✅ Received playlists: \(playlists)") // Debugging
+                print("✅ state.playlists : \(state.playlists )") // Debugging
                 state.isLoading = false
                 return .none
                 

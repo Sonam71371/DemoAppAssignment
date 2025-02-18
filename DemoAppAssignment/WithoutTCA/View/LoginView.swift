@@ -45,7 +45,8 @@ struct LoginView: View {
             .padding(40)
         }
         .fullScreenCover(isPresented: $showContentView) {
-            ContentView()
+            BottomTabView()
+           // ContentView()
         }
     }
     

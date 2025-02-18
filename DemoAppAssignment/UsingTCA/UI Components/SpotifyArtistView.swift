@@ -9,7 +9,22 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct ArtistView: View {
+//struct ArtistView: View {
+//    let store: StoreOf<SpotifyGenericReducer<Items>>
+//
+//    var body: some View {
+//        GenericListView(
+//            store: store,
+//            title: "Spotify Artists",
+//            fetchAction: .fetchItems,
+//            imageURL: { $0.images?.first?.url },
+//            itemName: { $0.name ?? "" },
+//            destinationView: { AnyView(SongDetailView(song: $0)) }
+//        )
+//    }
+//}
+
+struct SpotifyArtistView: View {
     let store: StoreOf<SpotifyArtistReducer>
 
     var body: some View {
@@ -87,11 +102,13 @@ struct ArtistView: View {
     private func AuthUser() {
 
         AuthService.shared.login() { result in
-            switch result {
-            case .success:
-                store.send(.fetchArtists)
-            case .failure(let error):
-                print("Error logging in: \(error.localizedDescription)")
+            DispatchQueue.main.async {  // Ensure UI update happens on the main thread
+                switch result {
+                case .success:
+                    store.send(.fetchArtists)
+                case .failure(let error):
+                    print("Error logging in: \(error.localizedDescription)")
+                }
             }
         }
     }

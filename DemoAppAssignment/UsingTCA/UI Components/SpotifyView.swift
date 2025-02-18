@@ -8,6 +8,23 @@
 import SwiftUI
 import ComposableArchitecture
 
+//struct SpotifyView: View {
+//    let store: StoreOf<SpotifyGenericReducer<Items>>
+//
+//    var body: some View {
+//        GenericListView(
+//            store: store,
+//            title: "Spotify Playlists",
+//            fetchAction: .fetchItems,
+//            imageURL: { $0.images?.first?.url },
+//            itemName: { $0.name ?? "" },
+//            destinationView: { AnyView(SongDetailView(song: $0)) }
+//        )
+//    }
+//}
+
+
+
 struct SpotifyView: View {
     let store: StoreOf<SpotifyReducer>
 
@@ -30,26 +47,18 @@ struct SpotifyView: View {
                             Text("Error: \(error)").foregroundColor(.red)
                             
                             Button(action: {
-                                AuthUser()//Refresh action
+                                AuthUser(viewStore)//Refresh action
+//                                print("🔄 Refresh triggered")
+//                                viewStore.send(.fetchPlaylists)
                             }) {
                                 Image(systemName: "arrow.clockwise")
                                 }
                             }
                         
                     } else {
-                        
-//                        List(viewStore.filteredPlaylists) { playlist in
-//                            NavigationLink(destination: SongDetailView(song: playlist)) {
-//                                HStack {
-//                                    AsyncImage(url: URL(string: playlist.images?.first?.url ?? ""))
-//                                        .frame(width: 50, height: 50)
-//                                        .clipShape(RoundedRectangle(cornerRadius: 8))
-//                                    
-//                                    Text(playlist.name ?? "")
-//                                }
-//                            }
-//                        }
-                        List(viewStore.filteredPlaylists) { playlist in
+//                        List(viewStore.filteredPlaylists, id: \.id ) { playlist in
+                        List(viewStore.playlists.indices, id: \.self) { index in
+                            let playlist = viewStore.playlists[index]
                             NavigationLink(destination: SongDetailView(song: playlist)) {
                                 HStack {
                                     AsyncImage(url: URL(string: playlist.images?.first?.url ?? ""))
@@ -61,6 +70,7 @@ struct SpotifyView: View {
                             }
                         }
                         .refreshable {
+                            print("🔄 Refresh triggered")
                             viewStore.send(.fetchPlaylists)
                         }
                     }
@@ -76,24 +86,15 @@ struct SpotifyView: View {
                     // Refresh Button on the Right
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
-                            viewStore.send(.fetchPlaylists) // Refresh action
+                            AuthUser(viewStore)
+                            print("🔄 Refresh triggered")
+//                            viewStore.send(.fetchPlaylists) // Refresh action
                         }) {
                             Image(systemName: "arrow.clockwise")
                                 .foregroundColor(.blue)
                         }
                     }
                 }
-//                .navigationTitle("Spotify Playlists")
-//                .toolbar {
-//                    ToolbarItem(placement: .navigationBarTrailing) {  // Add button to nav bar
-//                        Button(action: {
-//                            AuthUser()
-////                            viewStore.send(.fetchPlaylists)  // Refresh action
-//                        }) {
-//                            Image(systemName: "arrow.clockwise")
-//                        }
-//                    }
-//                }
                 .onAppear {
                     viewStore.send(.fetchPlaylists)
                 }
@@ -101,15 +102,29 @@ struct SpotifyView: View {
         }
     }
     
-    private func AuthUser() {
+    private func AuthUser(_ viewStore: ViewStore<SpotifyReducer.State, SpotifyReducer.Action>)  {
 
         AuthService.shared.login() { result in
-            switch result {
-            case .success:
-                store.send(.fetchPlaylists)
-            case .failure(let error):
-                print("Error logging in: \(error.localizedDescription)")
+            DispatchQueue.main.async {  // Ensure UI update happens on the main thread
+                switch result {
+                case .success:
+                    viewStore.send(.fetchPlaylists)
+                case .failure(let error):
+                    print("Error logging in: \(error.localizedDescription)")
+                }
             }
         }
     }
 }
+
+//                        List(viewStore.filteredPlaylists) { playlist in
+//                            NavigationLink(destination: SongDetailView(song: playlist)) {
+//                                HStack {
+//                                    AsyncImage(url: URL(string: playlist.images?.first?.url ?? ""))
+//                                        .frame(width: 50, height: 50)
+//                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+//
+//                                    Text(playlist.name ?? "")
+//                                }
+//                            }
+//                        }
